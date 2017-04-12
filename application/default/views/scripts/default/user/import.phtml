@@ -1,0 +1,23 @@
+<article class="post">
+    <header>
+        <div class="title">
+            <h2>Импорт пользователей из файла</h2>
+        </div>
+    </header>
+
+    <form method="post" action="<?= $this->url(array('dial_rule_id' => $this->dialRuleId), 'user_import') ?>" enctype="multipart/form-data">
+        <div class="row uniform">
+            <div class="6u 12u$(xsmall)">
+                Файл (формат *.csv)
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <input type="file" id="import_file" name="import_file">
+            </div>
+
+            <div class="12u$">
+                <input type="submit" value="Загрузить" />
+            </div>
+        </div>
+    </form>
+
+</article>

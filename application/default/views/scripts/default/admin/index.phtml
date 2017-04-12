@@ -1,0 +1,38 @@
+<article class="post">
+    <header>
+        <div class="title">
+            <h2>Администраторы</h2>
+        </div>
+    </header>
+
+    <table>
+        <tr>
+            <th>#ID</th>
+            <th>Тип</th>
+            <th>Логин</th>
+            <th>ФИО</th>
+            <th>Статус</th>
+            <th></th>
+        </tr>
+        <? if ($this->adminList) : ?>
+            <? foreach ($this->adminList as $admin) : ?>
+                <tr>
+                    <td><?= $admin->getId() ?></td>
+                    <td><?= $admin->getType() ?></td>
+                    <td><?= $admin->getLogin() ?></td>
+                    <td><?= $admin->getFullName() ?></td>
+                    <td><?= $admin->getStatus() == 'active' ? 'включен' : 'отключен' ?></td>
+                    <td>
+                        <a href="<?= $this->url(array('admin_id' => $admin->getId()), 'admin_edit') ?>">Информация</a>
+                    </td>
+                </tr>
+            <? endforeach; ?>
+        <? endif; ?>
+    </table>
+
+    <footer>
+        <ul class="actions">
+            <li><a href="<?=$this->url('admin_add')?>" class="button">Добавить</a></li>
+        </ul>
+    </footer>
+</article>

@@ -1,0 +1,55 @@
+<article class="post">
+    <header>
+        <div class="title">
+            <h2>Отчеты</h2>
+        </div>
+    </header>
+
+    <table>
+        <tr>
+            <th>Наименование</th>
+            <th>Дата создания</th>
+            <th>Успешных звонков</th>
+            <th>Звонков в очереди</th>
+            <th>Статус</th>
+            <th></th>
+        </tr>
+        <? if ($this->dialLogList) : ?>
+            <? foreach ($this->dialLogList as $dialLog) : ?>
+                <tr>
+                    <td><?= $dialLog->getDialRule()->getName() ?></td>
+                    <td><?= $dialLog->getCreateDate() ?></td>
+                    <td><?= $this->countArray[$dialLog->getId()]['success'] ?> </td>
+                    <td><?= $dialLog->getActiveCall() ?> </td>
+                    <td>
+                        <?
+                            if ($dialLog->isSuccess()) {
+                                if ($dialLog->isEnd()){
+                                    echo 'завершен';
+                                }else{
+                                    echo 'в процессе';
+                                }
+                            }elseif ($dialLog->isCanceled()) {
+                                echo 'отменен';
+                            }else{
+                                echo 'ошибка';
+                            }
+
+                        ?>
+                    <td>
+                        <a href="<?= $this->url(array('dial_log_id' => $dialLog->getId()), 'dial_log_info') ?>">Информация</a>
+                    </td>
+                </tr>
+            <? endforeach; ?>
+        <? endif; ?>
+    </table>
+
+    <?= $this->pager; ?>
+</article>
+
+<script type='text/javascript'>
+    function obnovit_stranicu() {
+        location.reload();
+    }
+    setInterval("obnovit_stranicu()", 600000);
+</script>

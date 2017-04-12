@@ -1,0 +1,134 @@
+<article class="post">
+    <header>
+        <div class="title">
+            <h2><?= $this->dialLog->getDialRule()->getName() ?></h2>
+        </div>
+    </header>
+
+    <form method="post" action="<?= $this->url(array('dial_log_id' => $this->dialLog->getId()), 'dial_rule_start_call_fail') ?>">
+        <table>
+            <tr>
+                <th></th>
+                <th>№</th>
+                <th>Пользователь</th>
+                <th>Идентификаторы</th>
+                <th>Телефон</th>
+                <th>Время вызова, сек.</th>
+                <th>Цифра</th>
+                <th>Статус</th>
+                <th>Дата</th>
+            </tr>
+            <? $failCount = 0; ?>
+            <? $digitArray = array(); ?>
+            <? if ($this->dialLog->getDialLogCallList()) : ?>
+                <? foreach ($this->dialLog->getDialLogCallList() as $index =>  $dialLogCall) : ?>
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="faildialid_<?= $dialLogCall->getUser()->getId() ?>" id="faildialid_<?= $dialLogCall->getUser()->getId() ?>">
+                        </td>
+                        <td>
+                            <?= ($this->pageId == 1 ? 0 : (($this->pageId - 1) * 10)) + ( $index + 1 ) ?>
+                        </td>
+                        <td><?= $dialLogCall->getUser()->getFullName() ?></td>
+                        <td><?= $dialLogCall->getUser()->getIdentificatorFirst() ?><br><?= $dialLogCall->getUser()->getIdentificatorSecond() ?></td>
+                        <td><?= $dialLogCall->getPhone() ?></td>
+                        <td><?= $dialLogCall->getDuration() ?></td>
+                        <td>
+                            <?
+                                if ($dialLogCall->getCallDigit()) {
+                                    echo $dialLogCall->getCallDigitData();
+                                    $digitArray[$dialLogCall->getCallDigit()][] = $dialLogCall->getUser();
+                                }
+                            ?>
+                        </td>
+                        <td>
+                            <?
+                                switch ($dialLogCall->getStatus())
+                                {
+                                    case 'busy': echo 'занято'; $failCount++; break;
+                                    case 'answered': echo 'ответ получен'; break;
+                                    case 'no_answered': echo 'нет ответа'; $failCount++; break;
+                                    case 'failed': echo 'сброс вызова'; $failCount++; break;
+                                }
+                            ?>
+                        </td>
+                        <td><?= $dialLogCall->getCreateDate() ?></td>
+                    </tr>
+                <? endforeach; ?>
+            <? endif; ?>
+        </table>
+        <?= $this->pager; ?>
+        <footer>
+            <ul class="actions">
+                <li><a href="<?=$this->url(array('dial_log_id' => $this->dialLog->getId()),'dial_log_export')?>" class="button">Экспорт</a></li>
+                <? if ($this->dialLog->isEnd()) : ?>
+                    <li><input type="submit" class="button" value="Начать обзвон" /></li>
+                <? else : ?>
+                    <li>В очереди <?= $this->dialLog->getActiveCall() ?> пользователей</li>
+                <? endif; ?>
+                <? if ($this->dialLog->isRun()) : ?>
+                    <li><a href="<?=$this->url(array('dial_log_id' => $this->dialLog->getId()),'dial_rule_stop_call')?>" class="button">Остановить обзвон</a></li>
+                <? endif; ?>
+            </ul>
+        </footer>
+    </form>
+
+</article>
+
+<article class="post">
+    <header>
+        <div class="title">
+            <h2>Статистика</h2>
+        </div>
+    </header>
+
+    <table>
+        <tr>
+            <th>Всего клиентов:</th>
+            <td><?= $this->dialLog->getDialLogCallList()->count(); ?></td>
+        </tr>
+        <tr>
+            <th>Общее время обзвона, сек:</th>
+            <td><?= $this->dialLog->getDialLogCallList()->allDuration(); ?></td>
+        </tr>
+        <tr>
+            <th>Кол-во недозвонов, %: <?= ($failCount * 100) / $this->dialLog->getDialLogCallList()->count() ?></th>
+            <td></td>
+        </tr>
+    </table>
+
+    <table>
+    <? foreach ($digitArray as $digit => $userArray) : ?>
+        <tr>
+            <td style="cursor: pointer" onclick="showDiv('table_<?= $digit ?>')"> Нажали цифру: <?= $digit ?>. Всего <?= count($userArray) ?> <span style="font-size: 12px">(*нажмите чтобы открыть)</span></td>
+        </tr>
+        <tr>
+            <td id="table_<?= $digit ?>" style="display: none">
+                <? foreach ($userArray as $user) : ?>
+                    <a href="<?= $this->url(array('user_id' => $user->getId()), 'user_edit') ?>"><?= $user->getPhone() ?></a>
+                <? endforeach; ?>
+            </td>
+        </tr>
+    <? endforeach; ?>
+    </table>
+</article>
+
+<script type="text/javascript">
+    function isConfirm() {
+        var isConfirm = confirm('Вы действительно хотите создать обзвон по клиентам');
+
+        if (!isConfirm){
+            return false;
+        }
+
+        return true
+    }
+
+    function showDiv(div)
+    {
+        if (document.getElementById(div).style.display=="none")
+            document.getElementById(div).style.display="block";
+        else
+            document.getElementById(div).style.display="none";
+    }
+</script>

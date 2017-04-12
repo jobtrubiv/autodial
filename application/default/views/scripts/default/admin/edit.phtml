@@ -1,0 +1,103 @@
+<article class="post">
+    <header>
+        <div class="title">
+            <h2>Редактировать информацию об администраторе</h2>
+        </div>
+    </header>
+
+    <form method="post" action="<?= $this->url(array('admin_id' => $this->admin->getId(), 'act' => 'save'), 'admin_edit') ?>">
+        <div class="row uniform">
+            <div class="6u 12u$(xsmall)">
+                Тип
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <? if ($this->isEdit) : ?>
+                    <select name="admin_type">
+                        <? foreach ($this->typeArray as $type) : ?>
+                            <? $selected = $type == $this->admin->getType() ? 'selected' : ''; ?>
+
+                            <option value="<?= $type ?>" <?= $selected ?>><?= $this->translate($type) ?></option>
+                        <? endforeach; ?>
+                    </select>
+                <? else : ?>
+                    <?= $this->admin->getType() ?>
+                <? endif; ?>
+            </div>
+            <div class="6u 12u$(xsmall)">
+                Логин
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <? if ($this->isEdit) : ?>
+                    <input type="text" name="admin_login" value="<?= $this->validateResult->getData('login') ?>" <?= $this->validateResult->isFieldError('login') ? 'class="verror"' : '' ?>>
+                <? else : ?>
+                    <?= $this->admin->getLogin() ?>
+                <? endif; ?>
+            </div>
+            <div class="6u 12u$(xsmall)">
+                Фамилия
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <? if ($this->isEdit) : ?>
+                    <input type="text" name="admin_surname" value="<?= $this->validateResult->getData('surname') ?>" <?= $this->validateResult->isFieldError('surname') ? 'class="verror"' : '' ?>>
+                <? else : ?>
+                    <?= $this->admin->getSurname() ?>
+                <? endif; ?>
+            </div>
+            <div class="6u 12u$(xsmall)">
+                Имя
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <? if ($this->isEdit) : ?>
+                    <input type="text" name="admin_name" value="<?= $this->validateResult->getData('name') ?>" <?= $this->validateResult->isFieldError('name') ? 'class="verror"' : '' ?>>
+                <? else : ?>
+                    <?= $this->admin->getName() ?>
+                <? endif; ?>
+            </div>
+            <div class="6u 12u$(xsmall)">
+                Отчество
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <? if ($this->isEdit) : ?>
+                    <input type="text" name="admin_patronymic" value="<?= $this->validateResult->getData('patronymic') ?>" <?= $this->validateResult->isFieldError('patronymic') ? 'class="verror"' : '' ?>>
+                <? else : ?>
+                    <?= $this->admin->getPatronymic() ? $this->admin->getPatronymic() : '<br>' ?>
+                <? endif; ?>
+            </div>
+            <div class="6u 12u$(xsmall)">
+                Статус
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <?= $this->admin->getStatus() == 'active' ? 'включен' : 'отключен' ?>
+            </div>
+
+            <? if ($this->isEdit && $this->currentAdmin->isTypeAdministrator()) : ?>
+                <div class="6u 12u$(xsmall)">
+                    Пароль
+                </div>
+                <div class="6u 12u$(xsmall)">
+                    <input type="password" name="admin_password" <?= $this->validateResult->isFieldError('password') ? 'class="verror"' : '' ?>>
+                </div>
+            <? endif; ?>
+            <? if ($this->isEdit) : ?>
+                <div class="12u$">
+                  <input type="submit" value="Сохранить" />
+                </div>
+            <? endif ?>
+        </div>
+    </form>
+
+    <? if (!$this->isEdit) : ?>
+        <footer>
+            <ul class="actions">
+                <li><a href="<?= $this->url(array('admin_id' => $this->admin->getId(), 'act' => 'edit'), 'admin_edit') ?>" class="button">Редактировать</a></li>
+
+                <? if ($this->admin->isActive()) : ?>
+                    <li><a href="<?= $this->url(array('admin_id' => $this->admin->getId()), 'admin_block') ?>" class="button">Заблокировать</a></li>
+                    <li><a href="<?= $this->url(array('admin_id' => $this->admin->getId()), 'admin_delete') ?>" class="button">Удалить</a></li>
+                <? else : ?>
+                    <li><a href="<?= $this->url(array('admin_id' => $this->admin->getId()), 'admin_active') ?>" class="button">Восстановить</a></li>
+                <? endif; ?>
+            </ul>
+        </footer>
+    <? endif; ?>
+</article>

@@ -1,0 +1,149 @@
+<article class="post">
+    <header>
+        <div class="title">
+            <h2><?= $this->dualRule->getName() ?></h2>
+
+            <? if (!$this->isEdit) : ?>
+                <? if ($this->dualRule->isActive()) : ?>
+                    <ul class="actions">
+                        <li><a href="<?= $this->url(array('dial_rule_id' => $this->dualRule->getId()), 'user_index') ?>" class="button">Пользователи</a></li>
+                        <li><a href="<?= $this->url(array('dial_rule_id' => $this->dualRule->getId()), 'call_file_index') ?>" class="button">Звуковые файлы</a></li>
+                        <li><a href="<?= $this->url(array('dial_rule_id' => $this->dualRule->getId()), 'dial_rule_start_call') ?>"  class="button" onclick="return isConfirm()">Начать обзвон</a></li>
+                    </ul>
+                <? endif; ?>
+            <? endif; ?>
+        </div>
+    </header>
+
+    <form method="post" action="<?= $this->url(array('dial_rule_id' => $this->dualRule->getId(), 'act' => 'save'), 'dial_rule_edit') ?>">
+        <div class="row uniform">
+            <div class="6u 12u$(xsmall)">
+                Наименование
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <? if ($this->isEdit) : ?>
+                    <input type="text" name="dial_rule_name" value="<?= $this->validateResult->getData('name') ?>" <?= $this->validateResult->isFieldError('name') ? 'class="verror"' : '' ?>>
+                <? else : ?>
+                    <?= $this->dualRule->getName() ?>
+                <? endif; ?>
+            </div>
+            <div class="6u 12u$(xsmall)">
+                Количество попыток
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <? if ($this->isEdit) : ?>
+                    <input type="text" name="dial_rule_max_retries" value="<?= $this->validateResult->getData('max_retries') ?>" <?= $this->validateResult->isFieldError('max_retries') ? 'class="verror"' : '' ?>>
+                <? else : ?>
+                    <?= $this->dualRule->getMaxRetries() ?>
+                <? endif; ?>
+            </div>
+            <!--
+            <div class="6u 12u$(xsmall)">
+                Время ожидание между попытками, сек
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <? if ($this->isEdit) : ?>
+                    <input type="text" name="dial_rule_timeout" value="<?= $this->validateResult->getData('timeout') ?>" <?= $this->validateResult->isFieldError('timeout') ? 'class="verror"' : '' ?>>
+                <? else : ?>
+                    <?= $this->dualRule->getTimeout() ?>
+                <? endif; ?>
+            </div>
+            -->
+            <? if (!$this->isEdit) : ?>
+                <div class="6u 12u$(xsmall)">
+                    Дата создания
+                </div>
+                <div class="6u 12u$(xsmall)">
+                    <?= $this->dualRule->getCreateDate() ?>
+                </div>
+                <div class="6u 12u$(xsmall)">
+                    Количество клиентов
+                </div>
+                <div class="6u 12u$(xsmall)">
+                    <?= $this->dualRule->getUserList()->count() ?>
+                </div>
+            <? endif; ?>
+
+            <? if ($this->isEdit) : ?>
+                <div class="12u$">
+                    <input type="submit" value="Сохранить" />
+                </div>
+            <? endif ?>
+        </div>
+    </form>
+
+    <? if (!$this->isEdit) : ?>
+        <footer>
+            <ul class="actions">
+                <li><a href="<?= $this->url(array('dial_rule_id' => $this->dualRule->getId(), 'act' => 'edit'), 'dial_rule_edit') ?>" class="button">Редактировать</a></li>
+
+                <? if ($this->dualRule->isActive()) : ?>
+                    <li><a href="<?= $this->url(array('dial_rule_id' => $this->dualRule->getId()), 'dial_rule_deleted') ?>" class="button">Удалить</a></li>
+                <? else : ?>
+                    <li><a href="<?= $this->url(array('dial_rule_id' => $this->dualRule->getId()), 'dial_rule_active') ?>" class="button">Восстановить</a></li>
+                <? endif; ?>
+
+
+            </ul>
+        </footer>
+    <? endif; ?>
+</article>
+
+<article class="post">
+    <header>
+        <div class="title">
+            <h2>Порядок действий при звонке клиенту</h2>
+        </div>
+    </header>
+
+    <table>
+    <tr>
+        <!--<th>Приоритет</th>-->
+        <th>Действие</th>
+        <th>Параметры действия</th>
+        <th></th>
+    </tr>
+    <? if ($this->dualRule->getDialRuleParametrList()) : ?>
+        <? foreach ($this->dualRule->getDialRuleParametrList() as $dialRuleParametr) : ?>
+            <tr>
+               <!-- <td><?= $dialRuleParametr->getPriority() ?></td>-->
+                <td>
+                    <?
+                    switch ($dialRuleParametr->getAction())
+                    {
+                        case 'play_file': echo 'проиграть файл'; break;
+                        case 'speech': echo 'синтез речи'; break;
+                        case 'digit': echo 'нажатие кнопки'; break;
+                    }
+                    ?>
+                </td>
+                <td><?= $dialRuleParametr->getFormatedActionData() ?></td>
+                <td>
+                    <a href="<?= $this->url(array('dial_rule_parametr_id' => $dialRuleParametr->getId()), 'dial_rule_parametr_delete') ?>">Удалить</a>
+                </td>
+            </tr>
+        <? endforeach; ?>
+    <? endif; ?>
+    </table>
+
+    <footer>
+        <ul class="actions">
+            <li><a href="<?= $this->url(array('dial_rule_id' => $this->dualRule->getId(), 'act' => 'play_file'), 'dial_rule_parametr_add') ?>">Добавить звукой файл в правило</a></li>
+            <li><a href="<?= $this->url(array('dial_rule_id' => $this->dualRule->getId(), 'act' => 'speech'), 'dial_rule_parametr_add') ?>">Добавить текст для воспроизведения</a></li>
+            <li><a href="<?= $this->url(array('dial_rule_id' => $this->dualRule->getId(), 'act' => 'digit'), 'dial_rule_parametr_add') ?>">Добавить нажатие кнопки</a></li>
+            <!--<li><a href="<?= $this->url(array('dial_rule_id' => $this->dualRule->getId()), 'dial_rule_play') ?>">Прослушать</a></li>-->
+        </ul>
+    </footer>
+</article>
+
+<script type="text/javascript">
+    function isConfirm() {
+        var isConfirm = confirm('Вы действительно хотите создать обзвон по клиентам');
+
+        if (!isConfirm){
+            return false;
+        }
+
+        return true
+    }
+</script>

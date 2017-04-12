@@ -1,0 +1,23 @@
+<article class="post">
+    <header>
+        <div class="title">
+            <h2>Результат поиска: <?= $this->text ?></h2>
+        </div>
+    </header>
+
+    <table>
+        <? if ($this->userList) : ?>
+            <? foreach ($this->userList as $user) : ?>
+                <tr>
+                    <td><?= $user->getFullName() ?></td>
+                    <td>
+                        <a href="<?= $this->url(array('user_id' => $user->getId()), 'user_edit') ?>">Информация</a>
+                    </td>
+                </tr>
+            <? endforeach; ?>
+        <? endif; ?>
+    </table>
+
+    <?= $this->pager; ?>
+
+</article>

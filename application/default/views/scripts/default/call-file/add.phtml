@@ -1,0 +1,23 @@
+<article class="post">
+    <header>
+        <div class="title">
+            <h2>Добавить файл для обзвона</h2>
+        </div>
+    </header>
+
+    <form method="post" action="<?= $this->url('call_file_add') ?>" enctype="multipart/form-data">
+        <div class="row uniform">
+            <div class="6u 12u$(xsmall)">
+                Файл (формат *wav)
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <input type="file" id="call_file" name="call_file">
+            </div>
+
+            <div class="12u$">
+                <input type="submit" value="Загрузить" />
+            </div>
+        </div>
+    </form>
+
+</article>

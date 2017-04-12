@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        <title>AutoDial</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!--[if lte IE 8]><script src="/assets/js/ie/html5shiv.js"></script><![endif]-->
+        <link rel="stylesheet" href="/assets/css/main.css" />
+        <!--[if lte IE 9]><link rel="stylesheet" href="/assets/css/ie9.css" /><![endif]-->
+        <!--[if lte IE 8]><link rel="stylesheet" href="/assets/css/ie8.css" /><![endif]-->
+
+        <?=$this->headLink()->setAntiCache(App_View_Helper_HeadLink::ANTI_CACHE_MTIME_GET_PARAM)?>
+        <?=$this->headScript()->setAntiCache(App_View_Helper_HeadScript::ANTI_CACHE_MTIME_GET_PARAM)?>
+    </head>
+<body>
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+        <!-- Header -->
+        <header id="header">
+            <h1><a href="<?= $this->url('index') ?>">AutoDial</a></h1>
+            <nav class="links">
+                <? if ($this->currentAdmin->exists()) : ?>
+                    <?= $this->render('_menu.phtml'); ?>
+                <? endif; ?>
+            </nav>
+            <nav class="main">
+                <ul>
+                    <li class="search">
+                        <a class="fa-search" href="#search">Search</a>
+                        <form id="search" method="get" action="<?= $this->url('index_search') ?>">
+                            <input type="text" name="query" placeholder="Search" />
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Main -->
+        <div id="main">
+            <?= $this->layout()->content ?>
+        </div>
+
+        <? if ($this->currentAdmin->exists()) : ?>
+            <section id="sidebar">
+                <section>
+                    <div class="mini-posts">
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="#">Последнии отчеты</a></h3>
+                                <? if ($this->dialLogResultList) : ?>
+                                    <? foreach ($this->dialLogResultList as $dialLog) : ?>
+                                        <article class="mini-post">
+                                            <header>
+                                                <h3><a href="<?= $this->url(array('dial_log_id' => $dialLog->getId()), 'dial_log_info') ?>"><?= $dialLog->getDialRule()->getName() ?></a></h3>
+                                                <time class="published" datetime="2015-10-20"><?= $dialLog->getCreateDate() ?></time>
+                                                <a href="<?= $this->url(array('dial_log_id' => $dialLog->getId()), 'dial_log_info') ?>" class="author"><img src="/images/status_<?= $dialLog->getStatus() ?>.jpg" alt="" /></a>
+                                            </header>
+
+                                        </article>
+                                    <? endforeach; ?>
+                                <? endif; ?>
+
+                                <ul class="actions">
+                                    <li><a href="<?= $this->url('dial_log_index') ?>" class="button">Посмотреть все</a></li>
+                                </ul>
+                            </header>
+                        </article>
+                    </div>
+                </section>
+            </section>
+        <? endif; ?>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/skel.min.js"></script>
+    <script src="/assets/js/util.js"></script>
+    <!--[if lte IE 8]><script src="/assets/js/ie/respond.min.js"></script><![endif]-->
+    <script src="/assets/js/main.js"></script>
+
+</body>
+</html>

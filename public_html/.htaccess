@@ -1,0 +1,14 @@
+DirectoryIndex index.php
+AddDefaultCharset UTF-8
+RewriteEngine On
+
+SetEnv LIBRARY_APP_PATH /srv/www/AutoDial/library/App
+SetEnv LIBRARY_MODEL_PATH /srv/www/AutoDial/library/Model
+SetEnv DOMAIN_ROOT_NAME_PRODUCTION autodial-dev.requ.ru
+
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l
+RewriteRule ^.*$ - [NC,L]
+RewriteRule !\.(js|ico|gif|jpg|png|css|swf|flv|txt)$ /index.php [NC,L]
+
+php_flag eaccelerator.enable off

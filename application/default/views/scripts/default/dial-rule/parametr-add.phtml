@@ -1,0 +1,124 @@
+<article class="post">
+    <header>
+        <div class="title">
+            <h2>Добавить правило</h2>
+        </div>
+    </header>
+
+    <form method="post" action="<?=$this->url(array('dial_rule_id' => $this->dialRule->getId(), 'action' => $this->action), 'dial_rule_parametr_add')?>">
+        <? if ($this->action == 'play_file') : ?>
+            <div class="row uniform">
+                <div class="6u 12u$(xsmall)">
+                    Файл для воспроизведения
+                </div>
+                <div class="6u 12u$(xsmall)">
+                    <select name="call_file_id">
+                        <? if ($this->callFileList) : ?>
+                            <? foreach ($this->callFileList as $callFile) : ?>
+                                <option value="<?= $callFile->getId() ?>"><?= $callFile->getName() ?></option>
+                            <? endforeach; ?>
+                        <? endif; ?>
+                    </select>
+                </div>
+
+                <div class="12u$">
+                    <input type="submit" value="Добавить" />
+                </div>
+            </div>
+        <? elseif ($this->action == 'speech') : ?>
+            <div class="row uniform">
+                <div class="6u 12u$(xsmall)">
+                    Текст для воспроизведениея<br>
+                    Пояснение:
+                    <ul>
+                        <li>{fio} - ФИО пользователя</li>
+                        <li>{phone} - Телефон пользователя</li>
+                        <li>{address} - Адрес пользователя</li>
+                        <li>{identificator_1} - Идентификатор 1</li>
+                        <li>{identificator_2} - Идентификатор 2</li>
+                    </ul>
+                </div>
+                <div class="6u 12u$(xsmall)">
+                    <textarea name="call_text" rows="5"></textarea>
+                </div>
+
+                <div class="12u$">
+                    <input type="submit" value="Добавить" />
+                </div>
+            </div>
+        <? elseif ($this->action == 'digit') : ?>
+            <div class="row uniform">
+                <div class="6u 12u$(xsmall)">
+                    Цифра на клавиатуре телефона
+                </div>
+                <div class="6u 12u$(xsmall)">
+                    <select name="parametr_digit">
+                        <? for ($i = 0; $i < 10; $i++) : ?>
+                            <option value="<?= $i ?>"><?= $i ?></option>
+                        <? endfor; ?>
+                    </select>
+                </div>
+                <div class="6u 12u$(xsmall)">
+                   Действие
+                </div>
+                <div class="6u 12u$(xsmall)">
+                    <select name="parametr_digit_action" id="parametr_digit_action" onchange="getval(this)">
+                        <? foreach ($this->numberActionList as $numberAction) : ?>
+                            <option value="<?= $numberAction->getCode() ?>"><?= $numberAction->getName() ?></option>
+                        <? endforeach; ?>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row uniform" id="queue_hide" name="queue_hide" style="display: none">
+                <div class="6u 12u$(xsmall)">
+                    Очередь
+                </div>
+                <div class="6u 12u$(xsmall)">
+                    <select name="parametr_digit_queue">
+                        <? foreach ($this->queueList as $index => $queue) : ?>
+                            <option value="<?= $queue ?>"><?= $queue ?></option>
+                        <? endforeach; ?>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row uniform" id="play_hide" name="play_hide" style="display: none">
+                <div class="6u 12u$(xsmall)">
+                    Файл для воспроизведения
+                </div>
+                <div class="6u 12u$(xsmall)">
+                    <select name="parametr_digit_play">
+                        <? foreach ($this->callFileList as $callFile) : ?>
+                            <option value="<?= $callFile->getId() ?>"><?= $callFile->getName() ?></option>
+                        <? endforeach; ?>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row uniform">
+                <div class="12u$">
+                    <input type="submit" value="Добавить" />
+                </div>
+            </div>
+
+            <script type="text/javascript">
+                function getval(sel) {
+                    var elem1 = document.getElementById('queue_hide');
+                    var elem2 = document.getElementById('play_hide');
+
+                    if (sel.value == "queue") {elem1.style.display="block";}else {
+
+                        elem1.style.display="none";
+                    }
+
+                    if (sel.value == "play") {elem2.style.display="block";}else {
+
+                        elem2.style.display="none";
+                    }
+                }
+            </script>
+        <? endif; ?>
+    </form>
+
+</article>

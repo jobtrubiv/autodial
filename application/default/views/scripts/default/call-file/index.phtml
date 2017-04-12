@@ -1,0 +1,34 @@
+<article class="post">
+    <header>
+        <div class="title">
+            <h2>Звуковые файлы</h2>
+        </div>
+    </header>
+
+    <table>
+        <tr>
+            <th>Имя файла</th>
+            <th>Размер</th>
+            <th></th>
+        </tr>
+        <? if ($this->callFileList) : ?>
+            <? foreach ($this->callFileList as $callFile) : ?>
+                <tr>
+                    <td>
+                        <?= $callFile->getName() ?>
+                    </td>
+                    <td><?= $callFile->getFileSize() ?> МБ</td>
+                    <td>
+                        <a href="<?= $this->url(array('call_file_id' => $callFile->getId()), 'call_file_delete') ?>">Удалить</a>
+                    </td>
+                </tr>
+            <? endforeach; ?>
+        <? endif; ?>
+    </table>
+
+    <footer>
+        <ul class="actions">
+            <li><a href="<?=$this->url(array('dial_rule_id' => $this->dialRuleId), 'call_file_add')?>" class="button">Добавить</a></li>
+        </ul>
+    </footer>
+</article>

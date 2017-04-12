@@ -1,0 +1,30 @@
+<section class="page grey-bg skew-title">
+    <div class="container box">
+        <div class="row">
+            <h3 class="section-h3 text-center"><?=$this->translate('Error')?> <?=$this->errorCode?></h3>
+            <span><?=$this->translate($this->message)?></span>
+        </div>
+    </div>
+</section>
+
+<section class="page grey-bg">
+    <div class="container box">
+        <? if ('production' != $this->env && $this->exception): ?>
+
+            <h3 class="section-h3 text-center">Exception information:</h3>
+            <p><strong>Message:</strong> <?= $this->exception->getMessage() ?></p>
+
+            <h3 class="section-h3 text-center">Stack trace:</h3>
+            <pre><?= $this->exception->getTraceAsString() ?></pre>
+
+            <h3 class="section-h3 text-center">Request Parameters:</h3>
+            <pre><? var_dump($this->request->getParams()) ?></pre>
+
+            <h3 class="section-h3 text-center"><?=$this->translate('Error')?> <?=$this->errorCode?></h3>
+        <? endif ?>
+    </div>
+</section>
+
+
+
+

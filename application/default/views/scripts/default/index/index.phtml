@@ -1,0 +1,34 @@
+<article class="post">
+    <header>
+        <div class="title">
+            <h2>Правила обзвона</h2>
+        </div>
+    </header>
+
+    <table>
+        <? if ($this->dialRuleList) : ?>
+            <? foreach ($this->dialRuleList as $dialRule) : ?>
+                <tr>
+                    <td><?= $dialRule->getName() ?></td>
+                    <td>
+                        <a href="<?= $this->url(array('dial_rule_id' => $dialRule->getId()), 'dial_rule_start_call') ?>" onclick="return isConfirm()">Начать обзвон</a>
+                    </td>
+                </tr>
+            <? endforeach; ?>
+        <? endif; ?>
+    </table>
+
+
+</article>
+
+<script type="text/javascript">
+    function isConfirm() {
+        var isConfirm = confirm('Вы действительно хотите создать обзвон по клиентам');
+
+        if (!isConfirm){
+            return false;
+        }
+
+        return true
+    }
+</script>

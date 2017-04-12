@@ -1,0 +1,36 @@
+<article class="post">
+    <header>
+        <div class="title">
+            <h2>Добавить правило обзвона</h2>
+        </div>
+    </header>
+
+    <form method="post" action="<?= $this->url('dial_rule_add') ?>">
+        <div class="row uniform">
+            <div class="6u 12u$(xsmall)">
+                Наименование
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <input type="text" name="dial_rule_name" value="<?= $this->validateResult->getData('name') ?>" <?= $this->validateResult->isFieldError('name') ? 'class="verror"' : '' ?>>
+            </div>
+            <div class="6u 12u$(xsmall)">
+                Количество попыток
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <input type="number" name="dial_rule_max_retries" value="1" >
+            </div>
+            <!--
+            <div class="6u 12u$(xsmall)">
+                Время ожидание между попытками, сек
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <input type="number" name="dial_rule_timeout" value="60" >
+            </div>
+-->
+            <div class="12u$">
+                <input type="submit" value="Добавить" />
+            </div>
+        </div>
+    </form>
+
+</article>

@@ -1,0 +1,32 @@
+<article class="post">
+    <header>
+        <div class="title">
+            <h2>Обзвоны</h2>
+        </div>
+    </header>
+
+    <table>
+        <tr>
+            <th>Наименовение</th>
+            <!--
+            <th>Количество попыток</th>
+            <th>Статус</th>
+            <th></th>
+            -->
+        </tr>
+        <? if ($this->dialRuleList) : ?>
+            <? foreach ($this->dialRuleList as $dialRule) : ?>
+                <tr>
+                    <td><a href="<?= $this->url(array('dial_rule_id' => $dialRule->getId()), 'dial_rule_edit') ?>"><?= $dialRule->getName() ?></a></td>
+                </tr>
+            <? endforeach; ?>
+        <? endif; ?>
+    </table>
+
+    <footer>
+        <ul class="actions">
+            <li><a href="<?=$this->url('dial_rule_add')?>" class="button">Добавить</a></li>
+        </ul>
+    </footer>
+
+</article>

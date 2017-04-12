@@ -1,0 +1,35 @@
+<article class="post">
+    <header>
+        <div class="title">
+            <h2>Линии</h2>
+        </div>
+    </header>
+
+    <table>
+        <tr>
+            <th>Напраление для вызова</th>
+            <th>Номер</th>
+            <th>Контекст для исходящего вызова</th>
+            <th>Время между попытками дозвона, сек.</th>
+            <th>Время ожидания поднятия трубки, сек.</th>
+        </tr>
+        <? if ($this->dialSettingsList) : ?>
+            <? foreach ($this->dialSettingsList as $dialSettings) : ?>
+                <tr>
+                    <td><?= $dialSettings->getTrunk() ?></td>
+                    <td><?= $dialSettings->getCallerId() ?></td>
+                    <td><?= $dialSettings->getContext() ?></td>
+                    <td><?= $dialSettings->getRetryTime() ?></td>
+                    <td><?= $dialSettings->getWaitTime() ?></td>
+                </tr>
+            <? endforeach; ?>
+        <? endif; ?>
+    </table>
+
+    <footer>
+        <ul class="actions">
+            <li><a href="<?= $this->url('dial_settings_edit') ?>" class="button">Редактировать</a></li>
+        </ul>
+    </footer>
+
+</article>

@@ -1,0 +1,46 @@
+<article class="post">
+    <header>
+        <div class="title">
+            <h2>Линии</h2>
+        </div>
+    </header>
+
+    <form method="post" action="<?= $this->url('dial_settings_edit') ?>">
+        <div class="row uniform">
+            <div class="6u 12u$(xsmall)">
+                Напраление для вызова
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <input type="text" name="dial_settings_trunk" value="<?= $this->dualSettings->getTrunk() ?>">
+            </div>
+            <div class="6u 12u$(xsmall)">
+                Номер
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <input type="text" name="dial_settings_caller_id" value="<?= $this->dualSettings->getCallerId() ?>">
+            </div>
+            <div class="6u 12u$(xsmall)">
+                Контекст для исходящего вызова
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <input type="text" name="dial_settings_context" value="<?= $this->dualSettings->getContext() ?>">
+            </div>
+            <div class="6u 12u$(xsmall)">
+                Время в секундах между попытками дозвона
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <input type="number" name="dial_settings_retry_time" value="<?= $this->dualSettings->getRetryTime() ?>">
+            </div>
+            <div class="6u 12u$(xsmall)">
+                Сколько секунд ожидаем поднятия трубки
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <input type="number" name="dial_settings_wait_time" value="<?= $this->dualSettings->getWaitTime() ?>">
+            </div>
+
+            <div class="12u$">
+                <input type="submit" value="Сохранить" />
+            </div>
+        </div>
+    </form>
+</article>

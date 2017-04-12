@@ -1,0 +1,49 @@
+<article class="post">
+    <header>
+        <div class="title">
+            <h2>Пользователи</h2>
+
+            <ul class="actions">
+                <li><a href="<?=$this->url(array('dial_rule_id' => $this->dialRuleId), 'user_add')?>" class="button">Добавить пользователя</a></li>
+                <li><a href="<?=$this->url(array('dial_rule_id' => $this->dialRuleId), 'user_import')?>" class="button">Импортивать из файла</a></li>
+                <li><a href="<?=$this->url(array('dial_rule_id' => $this->dialRuleId), 'user_delete_all')?>" class="button">Очистить список</a></li>
+            </ul>
+
+        </div>
+    </header>
+
+    <table>
+        <tr>
+            <th>ФИО</th>
+            <th>Телефон</th>
+            <th>Адрес</th>
+            <th>Округ</th>
+            <th>Район</th>
+            <th>Идентификаторы</th>
+            <th></th>
+        </tr>
+        <? if ($this->userList) : ?>
+            <? foreach ($this->userList as $user) : ?>
+                <tr>
+                    <td><?= $user->getFullName() ?></td>
+                    <td><?= $user->getPhone() ?></td>
+                    <td><?= $user->getFullAddress() ?></td>
+                    <td><?= $user->getDistrict() ?></td>
+                    <td><?= $user->getRegion() ?></td>
+                    <td>
+                        <?= $user->getIdentificatorFirst() ?><br><?= $user->getIdentificatorSecond() ?>
+                        <? if ($user->getIdentifictorList()) : ?>
+                            <? foreach ($user->getIdentifictorList() as $identificator) : ?>
+                                <?= $identificator->getIdentificator(); ?><br>
+                            <? endforeach; ?>
+                        <? endif; ?>
+                    </td>
+                    <td>
+                        <a href="<?= $this->url(array('user_id' => $user->getId()), 'user_edit') ?>">Информация</a>
+                    </td>
+                </tr>
+            <? endforeach; ?>
+        <? endif; ?>
+    </table>
+    <?= $this->pager; ?>
+</article>

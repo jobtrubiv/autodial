@@ -1,0 +1,31 @@
+
+<? if ($this->pageCount > 1): ?>
+
+    <ul class="pagination">
+        <li <? if(!isset($this->previous)):?>class="disabled"<? endif; ?>><a href="<?=$this->saveGet(array('page' => $this->previous))?>" class="b-prev pager_hru" pagerpage="<?=$this->previous?>">&laquo; <?=$this->translate('Prev')?></a>
+
+            <? if ($this->first != reset($this->pagesInRange)): ?>
+        <li><a href="<?php echo $this->saveGet(array('page' => $this->first)); ?>" class="pager_hru" pagerpage="<?=$this->first?>"><?= $this->first; ?></a>
+            <? if ($this->first != reset($this->pagesInRange)-1): ?>
+                <span>&hellip;</span>
+            <? endif; ?>
+            <? endif; ?>
+
+            <!-- Numbered page links -->
+            <? foreach ($this->pagesInRange as $page): ?>
+        <li <?if($page == $this->current):?>class="active"<?endif;?>><a href="<?php echo $this->saveGet(array('page' => $page)); ?>" class="pager_hru" pagerpage="<?=$page?>"><?= $page; ?></a>
+            <? endforeach; ?>
+
+            <? if ($page < $this->last): ?>
+                <? if ($this->last - $page > 1): ?>
+                    <span>&hellip;</span>
+                <? endif; ?>
+                <a href="<?php echo $this->saveGet(array('page' => $this->last)); ?>" class="pager_hru" pagerpage="<?=$this->last?>"><?= $this->last; ?></a>
+            <? endif; ?>
+
+
+        <li <? if(!isset($this->next)):?>class="disabled"<? endif; ?>><a href="<?=$this->saveGet(array('page' => $this->next))?>" class="b-next pager_hru" pagerpage="<?=$this->next?>"><?=$this->translate('Next')?> &raquo;</a>
+
+    </ul>
+
+<? endif; ?>

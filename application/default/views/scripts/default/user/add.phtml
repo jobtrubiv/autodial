@@ -1,0 +1,77 @@
+<article class="post">
+    <header>
+        <div class="title">
+            <h2>Добавить пользователя</h2>
+        </div>
+    </header>
+
+    <form method="post" action="<?= $this->url(array('dial_rule_id' => $this->dialRuleId), 'user_add') ?>">
+        <div class="row uniform">
+            <div class="6u 12u$(xsmall)">
+                Фамилия
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <input type="text" name="user_surname" value="<?= $this->validateResult->getData('surname') ?>" <?= $this->validateResult->isFieldError('surname') ? 'class="verror"' : '' ?>>
+            </div>
+            <div class="6u 12u$(xsmall)">
+                Имя
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <input type="text" name="user_name" value="<?= $this->validateResult->getData('name') ?>" <?= $this->validateResult->isFieldError('name') ? 'class="verror"' : '' ?>>
+            </div>
+            <div class="6u 12u$(xsmall)">
+                Отчество
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <input type="text" name="user_patronymic" value="<?= $this->validateResult->getData('patronymic') ?>" <?= $this->validateResult->isFieldError('patronymic') ? 'class="verror"' : '' ?>>
+            </div>
+            <div class="6u 12u$(xsmall)">
+                Телефон
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <input type="tel" name="user_phone" value="<?= $this->validateResult->getData('phone') ?>" <?= $this->validateResult->isFieldError('phone') ? 'class="verror"' : '' ?>>
+            </div>
+            <div class="6u 12u$(xsmall)">
+                Адрес
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <textarea name="user_full_address" <?= $this->validateResult->isFieldError('full_address') ? 'class="verror"' : '' ?>><?= $this->validateResult->getData('full_address') ?></textarea>
+            </div>
+            <div class="6u 12u$(xsmall)">
+                Округ
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <input type="text" name="user_district" value="<?= $this->validateResult->getData('district') ?>" <?= $this->validateResult->isFieldError('district') ? 'class="verror"' : '' ?>>
+            </div>
+            <div class="6u 12u$(xsmall)">
+                Район
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <input type="text" name="user_region" value="<?= $this->validateResult->getData('region') ?>" <?= $this->validateResult->isFieldError('region') ? 'class="verror"' : '' ?>>
+            </div>
+            <div class="6u 12u$(xsmall)">
+                Адрес элетронной почты
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <input type="email" name="user_email" value="<?= $this->validateResult->getData('email') ?>" <?= $this->validateResult->isFieldError('email') ? 'class="verror"' : '' ?>>
+            </div>
+            <div class="6u 12u$(xsmall)">
+                Идентификатор 1
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <input type="text" name="user_identificator_first" value="<?= $this->validateResult->getData('identificator_first') ?>" <?= $this->validateResult->isFieldError('identificator_first') ? 'class="verror"' : '' ?>>
+            </div>
+            <div class="6u 12u$(xsmall)">
+                Идентификатор 2
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <input type="text" name="user_identificator_second" value="<?= $this->validateResult->getData('identificator_second') ?>" <?= $this->validateResult->isFieldError('identificator_second') ? 'class="verror"' : '' ?>>
+            </div>
+
+            <div class="12u$">
+                <input type="submit" value="Добавить" />
+            </div>
+        </div>
+    </form>
+
+</article>

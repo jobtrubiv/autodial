@@ -1,0 +1,30 @@
+<article class="post">
+    <header>
+        <div class="title">
+            <h2><?= $this->translate('Warning') ?></h2>
+        </div>
+    </header>
+
+    <div class="row uniform">
+        <div class="12u 12u$(xsmall)">
+            <? if (is_array($this->message)) : ?>
+                <? foreach ($this->message as $error) : ?>
+                    <p><?= $error ?></p>
+                <? endforeach; ?>
+            <? else : ?>
+                <p><?= $this->message ?></p>
+            <? endif; ?>
+        </div>
+    </div>
+<br>
+    <footer>
+        <ul class="actions">
+            <? if ($this->redirectLabel) : ?>
+                <li><a href="<?= $this->returnUrl ?>" class="button big"><?= $this->translate($this->redirectLabel) ?></a></li>
+            <? else : ?>
+                <li><a href="<?= $this->returnUrl ?>" class="button big"><?= $this->translate('Return') ?></a></li>
+            <? endif; ?>
+        </ul>
+    </footer>
+</article>
+

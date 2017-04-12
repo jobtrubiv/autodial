@@ -1,0 +1,24 @@
+<article class="post">
+    <header>
+        <div class="title">
+            <h2><a href="#">Авторизация</a></h2>
+        </div>
+    </header>
+
+    <section>
+        <form method="post" action="<?=$this->url('index_login')?>">
+            <div class="row uniform">
+                <div class="6u 12u$(medium)">
+                    <input type="text" name="index_login" placeholder="Логин">
+                </div>
+                <div class="6u 12u$(medium)">
+                    <input type="password" name="index_password" placeholder="Пароль">
+                </div>
+
+                <div class="12u$">
+                    <input type="submit" value="Войти" />
+                </div>
+            </div>
+        </form>
+    </section>
+</article>

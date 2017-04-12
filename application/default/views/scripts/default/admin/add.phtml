@@ -1,0 +1,57 @@
+<article class="post">
+    <header>
+        <div class="title">
+            <h2>Добавить администратора</h2>
+        </div>
+    </header>
+
+    <form method="post" action="<?= $this->url('admin_add') ?>">
+        <div class="row uniform">
+            <div class="6u 12u$(xsmall)">
+                Тип
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <select name="admin_type">
+                    <? foreach ($this->typeArray as $type) : ?>
+                        <option value="<?= $type ?>"><?= $this->translate($type) ?></option>
+                    <? endforeach; ?>
+                </select>
+            </div>
+            <div class="6u 12u$(xsmall)">
+                Логин
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <input type="text" name="admin_login" value="<?= $this->validateResult->getData('login') ?>" <?= $this->validateResult->isFieldError('login') ? 'class="verror"' : '' ?>>
+            </div>
+            <div class="6u 12u$(xsmall)">
+                Пароль
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <input type="password" name="admin_password" <?= $this->validateResult->isFieldError('password') ? 'class="verror"' : '' ?>>
+            </div>
+            <div class="6u 12u$(xsmall)">
+                Фамилия
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <input type="text" name="admin_surname" value="<?= $this->validateResult->getData('surname') ?>" <?= $this->validateResult->isFieldError('surname') ? 'class="verror"' : '' ?>>
+            </div>
+            <div class="6u 12u$(xsmall)">
+                Имя
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <input type="text" name="admin_name" value="<?= $this->validateResult->getData('name') ?>" <?= $this->validateResult->isFieldError('name') ? 'class="verror"' : '' ?>>
+            </div>
+            <div class="6u 12u$(xsmall)">
+                Отчество
+            </div>
+            <div class="6u 12u$(xsmall)">
+                <input type="text" name="admin_patronymic" value="<?= $this->validateResult->getData('patronymic') ?>" <?= $this->validateResult->isFieldError('patronymic') ? 'class="verror"' : '' ?>>
+            </div>
+
+            <div class="12u$">
+                <input type="submit" value="Добавить" />
+            </div>
+        </div>
+    </form>
+
+</article>
